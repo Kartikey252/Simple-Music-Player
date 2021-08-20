@@ -20,6 +20,10 @@ def playPrevSong():
             return
         songPlaying = songNamePlaying['text']+'.mp3'
         songPlayingIndex = songList_.index(songPlaying)
+        if pygame.mixer.music.get_pos()/1000 > 10.0:
+            pygame.mixer.music.set_pos(0)
+            pygame.mixer.music.play()
+            return
         if shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔁':
             songToPlay = random.choice(songList_)
             playSong(songToPlay=songToPlay)
@@ -146,7 +150,7 @@ songNumbers.pack(side=LEFT, expand=YES, anchor=CENTER)
 fileButton = musicPlayerButton(titleBar, fg='yellow', entercolfg='yellow', entercolbg='red', text='📁', expand=NO, fill=NONE, anchor=CENTER, command=changeDir)
 
 # Song List Bar : 
-songList = Listbox(songListBar, font=('Courier New', 15, BOLD), activestyle=NONE, bg='#10111b', fg='white', bd=0, selectborderwidth=0, selectforeground='white', selectbackground='#10111b', highlightthickness=0)
+songList = Listbox(songListBar, font=('Consolas', 22), activestyle=NONE, bg='#10111b', fg='white', bd=0, selectborderwidth=0, selectforeground='white', selectbackground='#10111b', highlightthickness=0, height=7)
 songListScroll = Scrollbar(songListBar, bd=0, command=songList.yview)
 songList.config(yscrollcommand=songListScroll.set)
 songList.pack(side=LEFT, fill=BOTH, expand=YES, anchor=CENTER, padx=10, pady=10)
@@ -156,9 +160,9 @@ songListScroll.pack(side=LEFT, fill=Y, pady=10)
 # Song Play Bar :
 songNamePlaying = Label(songPlayBar, text='None Playing', bg='#10111b', fg='grey', font=('Courier New', 19, BOLD), anchor=W)
 songNamePlaying.pack(side=TOP, anchor=CENTER, fill=Y, padx=10, expand=YES)
-playPrevButton = musicPlayerButton(songPlayBar, text='\u23ee', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 35, BOLD), af='#53acb0', command=playPrevSong)
-playButton = musicPlayerButton(songPlayBar, text='\u25b6', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 35, BOLD), af='#53acb0', command=playNextSong)
-playNextButton = musicPlayerButton(songPlayBar, text='\u23ed', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 35, BOLD), af='#53acb0', command=playNextSong)
+playPrevButton = musicPlayerButton(songPlayBar, text='\u23ee', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 31, BOLD), af='#53acb0', command=playPrevSong)
+playButton = musicPlayerButton(songPlayBar, text='\u25b6', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 31, BOLD), af='#53acb0', command=playNextSong)
+playNextButton = musicPlayerButton(songPlayBar, text='\u23ed', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 31, BOLD), af='#53acb0', command=playNextSong)
 repeatButton = musicPlayerButton(songPlayBar, text='🔁', entercolfg='black', expand=YES, fill=NONE, fg='#53acb0', font=('consolas', 35), af='#53acb0', command=changeRepeat)
 shuffleButton = Button(songPlayBar, text='🔀', bg='#10111b', fg='#53acb0', relief=FLAT, activeforeground='#53acb0', activebackground='white', command=changeShuffle, bd=0, font=('consolas', 35))
 shuffleButton.pack(expand=YES, fill=NONE, anchor=CENTER, side=LEFT)
