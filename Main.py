@@ -93,6 +93,7 @@ def changeRepeat():
         repeatButton.button.config(text="🔁")
 
 def changeDir():
+    print(root.geometry())
     global file_, songList_
     newDir = askdirectory()
     if newDir == '':
@@ -132,8 +133,9 @@ class musicPlayerButton():
 
 root = Tk()
 pygame.init()
-root.geometry('700x430+250+230')
-root.resizable(False, False)
+root.geometry('430x430+250+230')
+root.minsize(430, 430)
+# root.resizable(False, False)
 root.title('Sky Dive Music Player')
 root.config(bg='#10111b')
 
@@ -141,8 +143,8 @@ titleBar = Frame(root, bg='#10111b')
 songListBar = Frame(root, bg='#10111b')
 songPlayBar = Frame(root, bg='#10111b')
 titleBar.pack(fill=BOTH)
-songListBar.pack(fill=BOTH)
-songPlayBar.pack(fill=BOTH, pady=5, expand=YES)
+songListBar.pack(fill=BOTH, expand=YES)
+songPlayBar.pack(fill=BOTH, pady=5)
 
 # Title Bar :
 songNumbers = Label(titleBar, text='Choose Directory ->', font=('Consolas', 19), fg='White', bg='#10111b')
@@ -150,7 +152,7 @@ songNumbers.pack(side=LEFT, expand=YES, anchor=CENTER)
 fileButton = musicPlayerButton(titleBar, fg='yellow', entercolfg='yellow', entercolbg='red', text='📁', expand=NO, fill=NONE, anchor=CENTER, command=changeDir)
 
 # Song List Bar : 
-songList = Listbox(songListBar, font=('Consolas', 22), activestyle=NONE, bg='#10111b', fg='white', bd=0, selectborderwidth=0, selectforeground='white', selectbackground='#10111b', highlightthickness=0, height=7)
+songList = Listbox(songListBar, font=('Consolas', 16), activestyle=NONE, bg='#10111b', fg='white', bd=0, selectborderwidth=0, selectforeground='white', selectbackground='#10111b', highlightthickness=0)
 songListScroll = Scrollbar(songListBar, bd=0, command=songList.yview)
 songList.config(yscrollcommand=songListScroll.set)
 songList.pack(side=LEFT, fill=BOTH, expand=YES, anchor=CENTER, padx=10, pady=10)
