@@ -27,12 +27,8 @@ def playPrevSong():
         if shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔁':
             songToPlay = random.choice(songList_)
             playSong(songToPlay=songToPlay)
-        elif shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔂':
-            pygame.mixer.music.set_pos(0)
-            pygame.mixer.music.play()
         elif repeatButton.button['text'] == '🔂':
-            pygame.mixer.music.set_pos(0)
-            pygame.mixer.music.play()
+            playSong(songToPlay=songPlaying)
         else:
             if shuffleButton['fg'] == 'white':
                 songToPlay = random.choice(songList_)
@@ -52,12 +48,8 @@ def playNextSong():
         if shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔁':
             songToPlay = random.choice(songList_)
             playSong(songToPlay=songToPlay)
-        elif shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔂':
-            pygame.mixer.music.set_pos(0)
-            pygame.mixer.music.play()
         elif repeatButton.button['text'] == '🔂':
-            pygame.mixer.music.set_pos(0)
-            pygame.mixer.music.play()
+            playSong(songToPlay=songPlaying)
         else:
             try:
                 playSong(songToPlay=songList_[songPlayingIndex+1])
@@ -93,7 +85,6 @@ def changeRepeat():
         repeatButton.button.config(text="🔁")
 
 def changeDir():
-    print(root.geometry())
     global file_, songList_
     newDir = askdirectory()
     if newDir == '':
