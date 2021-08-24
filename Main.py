@@ -4,14 +4,17 @@ import os, pygame, random
 from tkinter.filedialog import askdirectory
 
 def playSong(event=None, songToPlay=None):
-    if event != None:
-        songToPlay = songList_[event.widget.curselection()[0]]
-    pygame.mixer.music.unload()
-    pygame.mixer.music.load(os.path.join(file_, songToPlay))
-    pygame.mixer.music.play()
-    songNamePlaying.config(text=songToPlay[:-4])
-    root.title(songToPlay[:-4]+'  - Sky Dive Music Player')
-    playButton.button.config(text='\u23f8', command=pauseSong)
+    try:
+        if event != None:
+            songToPlay = songList_[event.widget.curselection()[0]]
+        pygame.mixer.music.unload()
+        pygame.mixer.music.load(os.path.join(file_, songToPlay))
+        pygame.mixer.music.play()
+        songNamePlaying.config(text=songToPlay[:-4])
+        root.title(songToPlay[:-4]+'  - Sky Dive Music Player')
+        playButton.button.config(text='\u23f8', command=pauseSong)
+    except:
+        pass
 
 def playPrevSong():
     try:
@@ -124,8 +127,8 @@ class musicPlayerButton():
 
 root = Tk()
 pygame.init()
-root.geometry('430x430+250+230')
-root.minsize(430, 430)
+root.geometry('500x450+250+220')
+root.minsize(500, 450)
 # root.resizable(False, False)
 root.title('Sky Dive Music Player')
 root.config(bg='#10111b')
