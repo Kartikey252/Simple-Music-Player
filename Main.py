@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk, Label, Frame, Button, LEFT, Scrollbar, END, TOP, NONE, BOTH, CENTER, FLAT, YES, Y, W, NO, Listbox
 from tkinter.font import BOLD
 import os, pygame, random
 from tkinter.filedialog import askdirectory
@@ -13,10 +13,11 @@ def playSong(event=None, songToPlay=None):
         songNamePlaying.config(text=songToPlay[:-4])
         root.title(songToPlay[:-4]+'  - Sky Dive Music Player')
         playButton.button.config(text='\u23f8', command=pauseSong)
+        addKeyboardCommands()
     except:
         pass
 
-def playPrevSong():
+def playPrevSong(evnt=None):
     try:
         if songNamePlaying['text'] == 'None Playing':
             playSong(songToPlay=songList_[-1])
@@ -41,7 +42,7 @@ def playPrevSong():
     except:
         pass
 
-def playNextSong():
+def playNextSong(evnt=None):
     try:
         if songNamePlaying['text'] == 'None Playing':
             playSong(songToPlay=songList_[0])
@@ -61,13 +62,13 @@ def playNextSong():
     except:
         pass
 
-def pauseSong():
-    pygame.mixer.music.pause()
-    playButton.button.config(text='\u25b6', command=unpauseSong)
-
-def unpauseSong():
-    pygame.mixer.music.unpause()
-    playButton.button.config(text='\u23f8', command=pauseSong)
+def pauseSong(evnt=None):
+    if playButton.button['text'] == '\u23f8':
+        pygame.mixer.music.pause()
+        playButton.button.config(text='\u25b6')
+    else:
+        pygame.mixer.music.unpause()
+        playButton.button.config(text='\u23f8')
 
 def checkSong():
     for event in pygame.event.get():
@@ -75,13 +76,13 @@ def checkSong():
             playNextSong()
     root.after(100, checkSong)
 
-def changeShuffle():
+def changeShuffle(evnt=None):
     if shuffleButton['fg'] == '#53acb0':
         shuffleButton.config(fg='white')
     else:
         shuffleButton.config(fg='#53acb0')
 
-def changeRepeat():
+def changeRepeat(evnt=None):
     if repeatButton.button['text'] == "🔁":
         repeatButton.button.config(text="🔂")
     else:
@@ -101,6 +102,21 @@ def changeDir():
             songList.insert(END, song[:-4])
         songNumbers.config(text=f'{len(songList_)} Songs', font=('Segoe Script', 19, BOLD))
 
+def addKeyboardCommands():
+    songList.bind('<Up>', NONE)
+    songList.bind('<Down>', NONE)
+    songList.bind('<space>', NONE)
+    root.bind('<Tab>', NONE)
+    root.bind('<Left>', playPrevSong)
+    root.bind('<Right>', playNextSong)
+    for frame in root.winfo_children():
+        frame.bind('<Left>', playPrevSong)
+        frame.bind('<Right>', playNextSong)
+        for wid in frame.winfo_children():
+            wid.bind('<Left>', playPrevSong)
+            wid.bind('<Right>', playNextSong)
+    root.bind('<s>', changeShuffle)
+    root.bind('<a>', changeRepeat)
 
 class musicPlayerButton():
     """Styled Button for this Music Player
@@ -127,8 +143,8 @@ class musicPlayerButton():
 
 root = Tk()
 pygame.init()
-root.geometry('500x450+250+220')
-root.minsize(500, 450)
+root.geometry('550x450+250+220')
+root.minsize(550, 450)
 # root.resizable(False, False)
 root.title('Sky Dive Music Player')
 root.config(bg='#10111b')
@@ -175,4 +191,4 @@ songList.bind('<Right>', NONE)
 
 checkSong()
 
-root.mainloop()
+root.mainloop(), NONE
