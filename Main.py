@@ -25,8 +25,7 @@ def playPrevSong(evnt=None):
         songPlaying = songNamePlaying['text']+'.mp3'
         songPlayingIndex = songList_.index(songPlaying)
         if pygame.mixer.music.get_pos()/1000 > 10.0:
-            pygame.mixer.music.set_pos(0)
-            pygame.mixer.music.play()
+            playSong(songToPlay=songPlaying)
             return
         if shuffleButton['fg'] == 'white' and repeatButton.button['text'] == '🔁':
             songToPlay = random.choice(songList_)
@@ -147,6 +146,7 @@ root.geometry('550x450+250+220')
 root.minsize(550, 450)
 # root.resizable(False, False)
 root.title('Sky Dive Music Player')
+root.wm_iconbitmap(r'./icon.ico')
 root.config(bg='#10111b')
 
 titleBar = Frame(root, bg='#10111b')
